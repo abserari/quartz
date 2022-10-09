@@ -3,8 +3,8 @@ public
 resources
 .idea
 content/.obsidian
-# assets/indices/linkIndex.json
-# assets/indices/contentIndex.json
+assets/indices/linkIndex.json
+assets/indices/contentIndex.json
 linkmap
 
 # 私人笔记不上传
