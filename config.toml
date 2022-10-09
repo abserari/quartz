@@ -5,9 +5,9 @@ relativeURLs = false
 disablePathToLower = true
 ignoreFiles = [
     "/content/templates/*",
-    # 这两个都不用屏蔽，由于本身已经被 .gitignore 屏蔽了
+    # 这个都不用屏蔽，由于本身已经被 .gitignore 屏蔽了
     # "/content/private/*",
-    # "/content/diary/*",
+    "/content/diary/*",
 ]
 summaryLength = 30
 paginate = 20
