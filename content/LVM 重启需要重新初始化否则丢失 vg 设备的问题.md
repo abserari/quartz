@@ -1,3 +1,6 @@
+---
+title: "LVM 重启需要重新初始化否则丢失 vg 设备的问题"
+---
 https://www.aboutyun.com/thread-16065-1-1.html
 
 设置  开机挂载 ，ok了  
