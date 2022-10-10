@@ -2,12 +2,13 @@
 public
 resources
 .idea
+# 含有敏感信息的插件不上传
 content/.obsidian
+
+# 编译副产物
 assets/indices/linkIndex.json
 assets/indices/contentIndex.json
 linkmap
 
 # 私人笔记不上传
 content/private 
-# 日记不上传
-content/diary
