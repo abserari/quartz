@@ -16,8 +16,9 @@ Hello👋，本页面提供了一个网络访问我的笔记的途径，使用 H
 在任意地方都可以写，打开一个 obsidian 目标文件夹即可。
 
 ### 发布到网页 notes.abser.top
-通过 abserari/quartz 这个 repo，
-1. 首先打开这个 repo 里的 /content 文件夹。
-2. 然后使用 [remotely save](https://github.com/remotely-save/remotely-save) 插件同步，
-3. 最后通过 git 提交到 github 触发 action 自动构建
-4. 构建使用 [[notes/hugo-extended]] [[hugo-obsidian]] 工具
+1. 通过 abserari/quartz 这个 repo，直接使用 obsidian-git 插件，push 到 quartz 库中。
+2. 最后通过 git 提交到 github 触发 action 自动构建
+3. 构建使用 [[notes/hugo-extended]] [[hugo-obsidian]] 工具
+
+### 同步功能
+然后使用 [remotely save](https://github.com/remotely-save/remotely-save) 插件同步，
