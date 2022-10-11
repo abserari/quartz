@@ -34,7 +34,7 @@ type Manager interface {
 
 接口非常简单。
 
-1. GetConfigMap ： 通过 namespace 和 name 获取对应 ConfigMap 对象。
+1. GetConfigMap ： 通过 [[namespace]] 和 name 获取对应 [[ConfigMap]] 对象。
 1. RegisterPod(pod *v1.Pod)：把指定 Pod 对象 yaml 指定的 configmap 注册到 Controller 中管理
 1. UnregisterPod(pod *v1.Pod)：把指定 Pod 对象 yaml 指定的 configmap 从 Controller 中注册管理中删除，注意 ConfigMap 需要没有任何其他已注册的 Pod 引用（即无被依赖项）才可以删除
 

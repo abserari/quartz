@@ -3,7 +3,7 @@ title: "Open Source History of Dapr project"
 tags:
 date:   2016-08-05 20:20:56 -0400
 ---
-## Open Source History of Dapr project
+[[## Open Source]] History of [[Dapr]] project
 
 At the beginning of this open-source column, I wrote this article to describe the birth and development of open-source projects, express my views on the open-source community and ecology, and share it with you. 
 
@@ -12,12 +12,12 @@ Some opinions are out of personal perspective, and there are inevitably some mis
 ## Background
 before the birth of the Dapr project, I would like to explain the current situation of the Dapr project for readers to understand the project itself. 
 
-Dapr is a CNCF community-driven open source project with Microsoft as its contributor. Microsoft, according to the author, the first author should be Bai Haishi and Yaron (he is also the author of the Dapr Learning Manual, who proposed OAM and Dapr). 
+Dapr is a [[CNCF]] community-driven open source project with Microsoft as its contributor. Microsoft, according to the author, the first author should be [[Bai Haishi]] and [[Yaron]] (he is also the author of the Dapr Learning Manual, who proposed [[OAM]] and Dapr). 
 
 The work objectives of the Dapr project are described as follows: 
 
 Dapr is a portable, event-driven runtime that enables any developer to quickly build flexible, stateless, and stateful applications that can run on cloud platforms or edge computing. 
-Some community students think Dapr is the next form of the service mesh, and some people also call this runtime software of the new era mecha (mecha), mecha provides distributed capabilities for business applications, just like the operator wearing a mecha, to do what he could not have done.
+Some community students think Dapr is the next form of the service mesh, and some people also call this runtime software of the new era [[mecha]] (mecha), mecha provides distributed capabilities for business applications, just like the operator wearing a mecha, to do what he could not have done.
 
 The following figure shows Bilgin Ibryam. Multi-Runtime Microservices Architecture 
 
@@ -75,7 +75,7 @@ Finally, reach users.
 
 When Dapr is a user-oriented project, there are developers who are more enthusiastic than open-source communities. Open-source is the best choice to make Dapr's development closer to users and the wide application of cloud developers that it wants to achieve. 
 
-We recommend two projects to observe the popularity and activity distribution of open-source projects ( Star-History and OSSInsight ), which are Bytebase and PingCap open-source tools. One picture wins thousands of words, and two pictures are attached to show its function. 
+We recommend two projects to observe the popularity and activity distribution of open-source projects ( [[Star-History]] and [[OSSInsight]] ), which are [[Bytebase]] and [[PingCap]] open-source tools. One picture wins thousands of words, and two pictures are attached to show its function. 
 
 Figure 1: Star harvest trend of open source Dapr project
 
@@ -96,13 +96,13 @@ The development evaluation of an open source project must pay attention to its r
 
 One is the ecosystem that supports the Dapr project operation. That is, driven by various Building blocks, their ecology determines which infrastructure Dapr users can apply.
 
-Take PubSub as an example. Common message queue drivers such as Kafka, Redis, NatsStreaming, and Pulsar provide the runtime capability in the publish/subscribe mode. 
+Take [[PubSub]] as an example. Common message queue drivers such as Kafka, Redis, NatsStreaming, and Pulsar provide the runtime capability in the publish/subscribe mode. 
 
 The ecosystem in this area is rich and colorful. The core problem is that drivers are contributed to the community by themselves. The code quality and the functions provided during application runtime are uneven. It can be seen that the idea of standardization cannot be easily achieved in the real world. 
 
 One is the Dapr-based project built on it. This ecology can also be reflected in the cases where most companies use Dapr. 
 
-The main users of Dapr started from the founders Microsoft and Ali, and now companies such as Qingyun have participated in the co-construction and produced many projects and practical cases. 
+The main users of Dapr started from the founders Microsoft and Ali, and now companies such as [[Qingyun]] have participated in the co-construction and produced many projects and practical cases. 
 
 Taking Microsoft as an example, users who serve it can easily and painlessly switch the underlying dependencies on the cloud (for example, switching message queues from Rabbitmq to kafka). 
 For example, Alibaba provides a large number of distributed capabilities for function applications in its functional computing platform. 
@@ -112,7 +112,7 @@ For example, Qingyun's Openfunction is also built using Dapr in the function com
 Even Microsoft has launched a commercial product container app based on Dapr, which allows users to write function-level services. The infrastructure is provided by context. 
 Dapr provides these services with the choice of only focusing on business code logic. 
 
-The developer ecosystem of open-source projects is an important criterion. The number of issues created, the speed of response, the richness of proposal submission, the degree of the active contributor, the entry and loss of new contributors and core contributors, and other indicators are all important bases for us to evaluate the developer ecosystem. This section can praise ossinsight project, which provides you with query services through the website and provides us with powerful data for evaluating open-source projects. 
+The developer ecosystem of open-source projects is an important criterion. The number of issues created, the speed of response, the richness of proposal submission, the degree of the active contributor, the entry and loss of new contributors and core contributors, and other indicators are all important bases for us to evaluate the developer ecosystem. This section can praise [[OSSInsight]] project, which provides you with query services through the website and provides us with powerful data for evaluating open-source projects. 
 
 Figure 2: analysis of open source activities of the Dapr project
 

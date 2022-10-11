@@ -5,7 +5,7 @@ date:   2016-08-05 20:20:56 -0400
 ---
 
 
-本文讲述如何分析设计 通过 React Hooks 进行 State 持久化管理
+本文讲述如何分析设计 通过 [[React Hooks]] 进行 State 持久化管理
 
   
 
@@ -15,11 +15,11 @@ date:   2016-08-05 20:20:56 -0400
 
   
 
-首先把组件中的 UI 和 状态分开，用 Action 连接，如下图。
+首先把组件中的 [[UI]] 和 状态分开，用 Action 连接，如下图。
 
 ![[blogs/Pasted image 20221011190847.png]]
 
-Action 是算子
+Action 是[[算子]]
 
   
 
@@ -197,7 +197,7 @@ function useLocalJSONStore(key, defaultValue) {
 解决了持久化存储，提供外在的状态管理支持。考虑到我们会使用 Go 来做前端：
 
 1.  使用 Hooks 加 sqlite3 库本地存储
-2.  使用 Hooks 和 Go 通信完成
+2.  使用 Hooks 和 [[Go]] 通信完成
 
   
 
@@ -300,4 +300,4 @@ export function Counter({key,initialCount}) {
 ## 进阶
 
 -   异步状态
--   装饰器
+-   [[装饰器]]

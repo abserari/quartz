@@ -4,7 +4,7 @@ tags:
 date:   2016-08-05 20:20:56 -0400
 ---
 
-## How Cloud Develop Kit from Google designed the docstore interface
+## How [[Cloud Develop Kit]] from Google designed the docstore interface
 
 <a name="ljgKZ"></a>
 ## Refer
@@ -15,12 +15,13 @@ date:   2016-08-05 20:20:56 -0400
 
 ## Design objectives: 
 
-**through the abstraction layer, we can mask differences, provide services in a standardized way, and configure business applications through description files. **
+**through the abstraction layer, we can mask differences, provide services in a standardized way, and configure business applications through description files.** 
 
-**Provides design ideas and guidelines for applications that use document storage. **
+**Provides design ideas and guidelines for applications that use document storage.** 
+
 <a name="yaqn6"></a>
 ## Intro
-common in MongoDB [document Storage](https://en.wikipedia.org/wiki/Document-oriented_database) provides an abstraction layer. 
+common in [[MongoDB]] [document Storage](https://en.wikipedia.org/wiki/Document-oriented_database) provides an abstraction layer. 
 
 Document Storage is a service that stores data in semi-structured JSON-like documents. These documents are grouped into collections. Like other NoSQL databases, document storage is modeless. 
 
@@ -95,7 +96,7 @@ For MongoDB, batch processing can be carried out to improve efficiency. As the s
 ### Driver Map & Opener
 Inherited from the Mysql Driver registration method, through the golang standard import_" github.com/xxx/driver" different database drivers can be introduced. The principle is to use a global Map.
 
-Go CDK has upgraded the Opener feature. The original custom URL Parsing method is "mysql", "user:password@/dbname" the features of the new version are blob+file:///dir even <api>+ <type>+ prefix (e.g. blob+bucket+file:///dir) for Google Cloud SDK, the same URL can provide different functions. However, in our opinion, this function does not have much effect for the time being, so we will block their design. 
+[[Golang]] CDK has upgraded the Opener feature. The original custom URL Parsing method is "mysql", "user:password@/dbname" the features of the new version are blob+file:///dir even <api>+ <type>+ prefix (e.g. blob+bucket+file:///dir) for Google Cloud SDK, the same URL can provide different functions. However, in our opinion, this function does not have much effect for the time being, so we will block their design. 
 
 <a name="MrRZi"></a>
 ### Dependency Injection wire 

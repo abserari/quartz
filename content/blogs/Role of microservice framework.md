@@ -3,9 +3,9 @@ title: "Role of microservice framework"
 tags:
 date:   2016-08-05 20:20:56 -0400
 ---
-## Role of microservice framework
+## Role of [[microservice framework]]
 
-## HTTP Channel and GRPC Channel 
+## HTTP Channel and [[GRPC]] Channel 
 
 before we begin, let's explore the differences between HTTP and RPC. The reason why gRPC is discussed here is that no one uses common RPC. 
 
@@ -17,7 +17,7 @@ After all, the business logic is consistent, which seems to be only different in
 
 Colleagues who have done this know that the differences in business coding are not small. Although the differences are constrained to the transport layer through the abstraction layer during design, there is no framework to block the differences in implementation. Therefore, coding students need to go deep into it and handle it by themselves. 
 
-For example, you need to learn more about envoy and proto files, how to encode requests and return values, and how to use specific protobuf to parse message packets in your business. 
+For example, you need to learn more about envoy and proto files, how to encode requests and return values, and how to use specific [[protobuf]] to parse message packets in your business. 
 
 The differences can be shielded at the abstraction level. We still need to write detailed differences in implementation. These are the operations that some programmers can replace with frameworks. 
 
@@ -50,7 +50,7 @@ Constraints can be carried out through the framework, which is also the wisdom o
 
 - Best Practices: 
 
-business code usually uses simple addition, deletion, modification, query data, and target resources. At the same time, there are some common functional requirements, such as JWT. 
+business code usually uses simple addition, deletion, modification, query data, and target resources. At the same time, there are some common functional requirements, such as [[JWT]]. 
 
 The framework can shield these differences. For example, JWT only has different types of tokens carried by HTTP, and ORM shields the actual data storage software interfaces in the background for addition, deletion, query, modification, and modification. 
 
@@ -88,7 +88,7 @@ Back to our question at the beginning, is there a framework that unifies the HTT
 
 What about the abstract cost? 
 
-The field type in the Protobuf is lost, and it is considered a payload. The handler has different self-processing types, which is consistent with HTTP abstraction. 
+The field type in the [[Protobuf]] is lost, and it is considered a payload. The handler has different self-processing types, which is consistent with HTTP abstraction. 
 
 Is it true that such an abstraction layer has just come up with now? If you have a deeper understanding of computer science, you will find that some past ideas shine brilliantly in new scenarios. 
 

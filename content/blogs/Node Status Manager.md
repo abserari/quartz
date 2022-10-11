@@ -37,25 +37,25 @@ func GoRuntime() Setter {
 	}
 }
 ```
-this mode belongs to the middleware operation mode. You can contact middleware for understanding. 
+this mode belongs to the [[middleware]] operation mode. You can contact middleware for understanding. 
 <a name="E3eSp"></a>
 ## Setter List
 we learned the setter mode changed by Node status. Currently, the code contains the following 12 setters:
-- **NodeAddress **returns a Setter that updates address-related information on the node.：updates address-related fields, such as IP address and hostname (typically the hostname variable in kubelet). 
-- **MachineInfo **returns a Setter that updates machine-related information on the node.：updates fields related to host information, such as the maximum number of pods, the number of pods allocated to each core, and the number of resources. 
-- **VersionInfo **returns a Setter that updates version-related information on the node.：containerRuntime version, cadvisor version
-- **DaemonEndpoints **returns a Setter that updates the daemon endpoints on the node.
-- **Images **returns a Setter that updates the images on the node.：updates image information. 
-- **GoRuntime **returns a Setter that sets GOOS and GOARCH on the node.：GOOS GOARCH information 
+- **NodeAddress** returns a Setter that updates address-related information on the node.：updates address-related fields, such as IP address and hostname (typically the hostname variable in kubelet). 
+- **MachineInfo**returns a Setter that updates machine-related information on the node.：updates fields related to host information, such as the maximum number of pods, the number of pods allocated to each core, and the number of resources. 
+- **VersionInfo**returns a Setter that updates version-related information on the node.：containerRuntime version, cadvisor version
+- **DaemonEndpoints**returns a Setter that updates the daemon endpoints on the node.
+- **Images**returns a Setter that updates the images on the node.：updates image information. 
+- **GoRuntime**returns a Setter that sets GOOS and GOARCH on the node.：GOOS GOARCH information 
 - **ReadyCondition** returns a Setter that updates the v1.NodeReady condition on the node.：determines whether the node is in the Ready state from Kubelet fields such as the error return function in the runtimeState. 
-- **MemoryPressureCondition **returns a Setter that updates the v1.NodeMemoryPressure condition on the node.
-- **PIDPressureCondition **returns a Setter that updates the v1.NodePIDPressure condition on the node.
-- **DiskPressureCondition **returns a Setter that updates the v1.NodeDiskPressure condition on the node.
-- **VolumesInUse **returns a Setter that updates the volumes in use on the node.
-- **VolumeLimits **returns a Setter that updates the volume limits on the node.
+- **MemoryPressureCondition**returns a Setter that updates the v1.NodeMemoryPressure condition on the node.
+- **PIDPressureCondition**returns a Setter that updates the v1.NodePIDPressure condition on the node.
+- **DiskPressureCondition**returns a Setter that updates the v1.NodeDiskPressure condition on the node.
+- **VolumesInUse**returns a Setter that updates the volumes in use on the node.
+- **VolumeLimits**returns a Setter that updates the volume limits on the node.
 
 
-Setter 的入参通常是 Kubelet 中的字段，自然使用是通过 Kubelet 去初始化使用。
+Setter 的入参通常是 Kubelet 中的字段，自然使用是通过 [[Kubelet]] 去初始化使用。
 <a name="uRi9a"></a>
 ## Kubelet Node Status
 [/](https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e)[pkg /](https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg)[kubelet /](https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg/kubelet)[kubelet_node_status.go](https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go)
