@@ -1,0 +1,178 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=description content="本文讲述如何分析设计 通过 React Hooks 进行 State 持久化管理
+分析 正常前端，组件为类文件，自己维持状态，不易复用。
+首先把组件中的 UI 和 状态分开，用 Action 连接，如下图。
+![[blogs/Pasted image 20221011190847.png]]
+Action 是算子
+Function 则可成为以下函数
+  UI = f(S)
+  状态驱动组件重新渲染 UI
+  Scu =f(Sc, ∆)
+  组件会用到的 Scu 和 更改 Sc 的 ∆ 方法决定。"><title>React Hooks State Persistence</title><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" type=image/png href=https://notes.abser.top//icon.png><link href=https://notes.abser.top/styles.7153093e4d1bbb584a28469cadfa3f88.min.css rel=stylesheet><link href=https://notes.abser.top/styles/_light_syntax.86a48a52faebeaaf42158b72922b1c90.min.css rel=stylesheet id=theme-link><script src=https://notes.abser.top/js/darkmode.859bfc1cd0b17406c8e6c095372cb007.min.js></script>
+<script src=https://notes.abser.top/js/util.9825137f5e7825e8553c68ce39ac9e44.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css integrity=sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js integrity=sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/copy-tex.min.js integrity=sha384-ww/583aHhxWkz5DEVn6OKtNiIaLi2iBRNZXfJRiY1Ai7tnJ9UXpEsyvOITVpTl4A crossorigin=anonymous></script>
+<script src=https://unpkg.com/@floating-ui/core@0.7.3></script>
+<script src=https://unpkg.com/@floating-ui/dom@0.5.4></script>
+<script src=https://notes.abser.top/js/popover.53ad9a087e3feeaaa12b63bfd02d923b.min.js></script>
+<script src=https://notes.abser.top/js/code-title.b35124ad8db0ba37162b886afb711cbc.min.js></script>
+<script src=https://notes.abser.top/js/clipboard.c20857734e53a3fb733b7443879efa61.min.js></script>
+<script src=https://notes.abser.top/js/callouts.7723cac461d613d118ee8bb8216b9838.min.js></script>
+<script>const BASE_URL="https://notes.abser.top/",fetchData=Promise.all([fetch("https://notes.abser.top/indices/linkIndex.b905f3b31f0cdee7fde67a58ef8594aa.min.json").then(e=>e.json()).then(e=>({index:e.index,links:e.links})),fetch("https://notes.abser.top/indices/contentIndex.4c34f810e4ad57825e7ec6e1340df7f2.min.json").then(e=>e.json())]).then(([{index:e,links:t},n])=>({index:e,links:t,content:n})),render=()=>{const e=new URL(BASE_URL),t=e.pathname,n=window.location.pathname,s=t==n;addCopyButtons(),addTitleToCodeBlocks(),addCollapsibleCallouts(),initPopover("https://notes.abser.top",!0,!0);const o=document.getElementById("footer");if(o){const e=document.getElementById("graph-container");if(!e)return requestAnimationFrame(render);e.textContent="";const t=s&&!1;drawGraph("https://notes.abser.top",t,[{"/moc":"#4388cc"}],t?{centerForce:1,depth:-1,enableDrag:!0,enableLegend:!1,enableZoom:!0,fontSize:.5,linkDistance:1,opacityScale:3,repelForce:1,scale:1.4}:{centerForce:1,depth:1,enableDrag:!0,enableLegend:!1,enableZoom:!0,fontSize:.6,linkDistance:1,opacityScale:3,repelForce:2,scale:1.2})}},init=(e=document)=>{addCopyButtons(),addTitleToCodeBlocks(),renderMathInElement(e.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}],macros:{'’':"'"},throwOnError:!1})}</script><script type=module>
+    import { attachSPARouting } from "https:\/\/notes.abser.top\/js\/router.9d4974281069e9ebb189f642ae1e3ca2.min.js"
+    attachSPARouting(init, render)
+  </script></head><script async src="https://www.googletagmanager.com/gtag/js?id=G-45QF7GTLZX"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-45QF7GTLZX",{anonymize_ip:!1})}</script><body><div id=search-container><div id=search-space><input autocomplete=off id=search-bar name=search type=text aria-label=Search placeholder="Search for something..."><div id=results-container></div></div></div><script src=https://cdn.jsdelivr.net/npm/flexsearch@0.7.21/dist/flexsearch.bundle.js integrity="sha256-i3A0NZGkhsKjVMzFxv3ksk0DZh3aXqu0l49Bbh0MdjE=" crossorigin=anonymous defer></script>
+<script defer src=https://notes.abser.top/js/full-text-search.24827f874defbbc6d529926cbfcfb493.min.js></script><div class=singlePage><header><h1 id=page-title><a href=https://notes.abser.top/>😊杨鼎睿的笔记</a></h1><div class=spacer></div><div id=search-icon><p>Search</p><svg tabindex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search Icon</title><desc id="desc">Icon to open search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/><circle cx="8" cy="8" r="7"/></g></svg></div><div class=darkmode><input class=toggle id=darkmode-toggle type=checkbox tabindex=-1>
+<label id=toggle-label-light for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="dayIcon" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35"><title>Light Mode</title><path d="M6 17.5C6 16.672 5.328 16 4.5 16h-3C.672 16 0 16.672.0 17.5S.672 19 1.5 19h3C5.328 19 6 18.328 6 17.5zM7.5 26c-.414.0-.789.168-1.061.439l-2 2C4.168 28.711 4 29.086 4 29.5 4 30.328 4.671 31 5.5 31c.414.0.789-.168 1.06-.44l2-2C8.832 28.289 9 27.914 9 27.5 9 26.672 8.329 26 7.5 26zm10-20C18.329 6 19 5.328 19 4.5v-3C19 .672 18.329.0 17.5.0S16 .672 16 1.5v3C16 5.328 16.671 6 17.5 6zm10 3c.414.0.789-.168 1.06-.439l2-2C30.832 6.289 31 5.914 31 5.5 31 4.672 30.329 4 29.5 4c-.414.0-.789.168-1.061.44l-2 2C26.168 6.711 26 7.086 26 7.5 26 8.328 26.671 9 27.5 9zM6.439 8.561C6.711 8.832 7.086 9 7.5 9 8.328 9 9 8.328 9 7.5c0-.414-.168-.789-.439-1.061l-2-2C6.289 4.168 5.914 4 5.5 4 4.672 4 4 4.672 4 5.5c0 .414.168.789.439 1.06l2 2.001zM33.5 16h-3c-.828.0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5h3c.828.0 1.5-.672 1.5-1.5S34.328 16 33.5 16zM28.561 26.439C28.289 26.168 27.914 26 27.5 26c-.828.0-1.5.672-1.5 1.5.0.414.168.789.439 1.06l2 2C28.711 30.832 29.086 31 29.5 31c.828.0 1.5-.672 1.5-1.5.0-.414-.168-.789-.439-1.061l-2-2zM17.5 29c-.829.0-1.5.672-1.5 1.5v3c0 .828.671 1.5 1.5 1.5s1.5-.672 1.5-1.5v-3C19 29.672 18.329 29 17.5 29zm0-22C11.71 7 7 11.71 7 17.5S11.71 28 17.5 28 28 23.29 28 17.5 23.29 7 17.5 7zm0 18c-4.136.0-7.5-3.364-7.5-7.5s3.364-7.5 7.5-7.5 7.5 3.364 7.5 7.5S21.636 25 17.5 25z"/></svg></label><label id=toggle-label-dark for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="nightIcon" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'"><title>Dark Mode</title><path d="M96.76 66.458c-.853-.852-2.15-1.064-3.23-.534-6.063 2.991-12.858 4.571-19.655 4.571C62.022 70.495 50.88 65.88 42.5 57.5 29.043 44.043 25.658 23.536 34.076 6.47c.532-1.08.318-2.379-.534-3.23-.851-.852-2.15-1.064-3.23-.534-4.918 2.427-9.375 5.619-13.246 9.491-9.447 9.447-14.65 22.008-14.65 35.369.0 13.36 5.203 25.921 14.65 35.368s22.008 14.65 35.368 14.65c13.361.0 25.921-5.203 35.369-14.65 3.872-3.871 7.064-8.328 9.491-13.246C97.826 68.608 97.611 67.309 96.76 66.458z"/></svg></label></div></header><article><h1>React Hooks State Persistence</h1><p class=meta>Last updated
+Aug 5, 2016
+<a href=https://github.com/abserari/quartz/tree/hugo/content/blogs/React%20Hooks%20State%20Persistence.md rel=noopener>Edit Source</a></p><ul class=tags></ul><aside class=mainTOC><details open><summary>Table of Contents</summary><nav id=TableOfContents><ol><li><a href=#分析>分析</a><ol><li><a href=#function>Function</a></li><li><a href=#入参>入参</a></li><li><a href=#局部渲染>局部渲染</a></li></ol></li><li><a href=#设计>设计</a><ol><li><a href=#实虚部数学模型>实虚部数学模型</a></li><li><a href=#persistence>Persistence </a></li><li><a href=#connector>Connector</a></li><li><a href=#action-by-curryfunc>Action by CurryFunc</a></li></ol></li><li><a href=#实现>实现</a><ol><li><a href=#persistence-1>Persistence</a></li><li><a href=#connector-1>Connector</a></li><li><a href=#usestore>useStore</a></li><li><a href=#目前状况>目前状况</a></li></ol></li><li><a href=#使用>使用</a></li><li><a href=#进阶>进阶</a></li></ol></nav></details></aside><p>本文讲述如何分析设计 通过 React Hooks 进行 State 持久化管理</p><a href=#分析><h2 id=分析><span class=hanchor arialabel=Anchor># </span>分析</h2></a><p>正常前端，组件为类文件，自己维持状态，不易复用。</p><p>首先把组件中的 UI 和 状态分开，用 Action 连接，如下图。</p><p><img src="/blogs/Pasted image 20221011190847.png" width=auto></p><p>Action 是算子</p><a href=#function><h3 id=function><span class=hanchor arialabel=Anchor># </span>Function</h3></a><p>则可成为以下函数</p><ul><li><p>UI = <code>f(S)</code></p></li><li><p>状态驱动组件重新渲染 UI</p></li><li><p>Scu =<code>f(Sc, ∆)</code></p></li><li><p>组件会用到的 Scu 和 更改 Sc 的 ∆ 方法决定。</p></li></ul><a href=#s><h4 id=s><span class=hanchor arialabel=Anchor># </span>S</h4></a><p>每一个组件有他自己的状态集 s。</p><a href=#scu><h5 id=scu><span class=hanchor arialabel=Anchor># </span>scu</h5></a><p>即，component use ：组件用到的状态，比如计数器中的数字</p><p>所有组件的使用到 scu 共同组成一个状态 Scu&ndash;渲染一个 UI。</p><a href=#sc><h5 id=sc><span class=hanchor arialabel=Anchor># </span>sc</h5></a><p>即，收到组件影响的状态，如登录组件可能每登录一次就会增加计数器，但是对于登录组件并不会用到这个状态，虽然它会更改它。</p><a href=#入参><h3 id=入参><span class=hanchor arialabel=Anchor># </span>入参</h3></a><a href=#heading><h4 id=heading><span class=hanchor arialabel=Anchor># </span>∆</h4></a><p>设计 State 框架时，让每一个组件声明 sa 状态时，提供一个更改自己的函数 ma ，在 Action 事件时调用用于更改 State，而多个 ma 的集合为 ∆。</p><a href=#s-1><h4 id=s-1><span class=hanchor arialabel=Anchor># </span>S</h4></a><p>Sa =<code>f(S, ∆)</code> 中的 S 作为 f 的参数传入，因为并不知道 Action 会更改哪些 State 【甚至不知道有哪些】，故把所有 State 都作为入参。</p><a href=#局部渲染><h3 id=局部渲染><span class=hanchor arialabel=Anchor># </span>局部渲染</h3></a><p>更改的状态驱动 UI 渲染，如果相同可以不改变。</p><p>如上所说，UI 由于入参为 S ，会接收所有的 State，组件自己根据自己需要的 sa 变动渲染，而不是 UI 根据 S 改动分发事件。</p><p>观察 Hooks 可知，<code>useState()</code> 方法使用<code>[Object.is](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description)</code>
+<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description rel=noopener>比较算法</a> 来比较 state。</p><p>而 <code>useEffect()</code>则提供选择让它
+<a href=https://zh-hans.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect rel=noopener>在只有某些值改变的时候</a> 才执行的参数。</p><a href=#设计><h2 id=设计><span class=hanchor arialabel=Anchor># </span>设计</h2></a><a href=#实虚部数学模型><h3 id=实虚部数学模型><span class=hanchor arialabel=Anchor># </span>实虚部数学模型</h3></a><p>实数并不完备，引入虚部。</p><p>虚数，只需要去掉虚部就可以表示实数。</p><p>Curry Func 也如此。</p><p>以上同理：<code>f(S,∆)</code>中<code>f(S)</code> 代表实数，不完备，加入 ∆ ，可以表达所有情况。</p><p>更改的维度从一维的 线 成为了 二维的平面。</p><p>另：框架使用的<code>f(S, ∆)</code>还是一维的线，但其实是该平面 任意一条线 ，因为 f(S,∆) 已经中的 ∆ 和 S 已经经由使用者确定，即在多维度选择了一个平面降维实现在代码中了。</p><a href=#persistence><h3 id=persistence><span class=hanchor arialabel=Anchor># </span>Persistence </h3></a><p>需要一个地方存储数据，local，session，remote 等.</p><a href=#connector><h3 id=connector><span class=hanchor arialabel=Anchor># </span>Connector</h3></a><p>组件如何把触发的事件分发给 State 处理？需要通信。</p><p>由于 js 单线程模型，选择共享内存设计新增一个 Connector 用于通信。</p><p>组件 Component 如何通知 State 改动。共享内存，采用 Connector 中间层。</p><a href=#action-by-curryfunc><h3 id=action-by-curryfunc><span class=hanchor arialabel=Anchor># </span>Action by CurryFunc</h3></a><p>State 如何知道框架使用者定义的 Action 改动了哪些 State ？即不知道 ∆ 的具体值。采用 Curry Func 满足延迟求值的需求。</p><p>使用 <code>fg(S){return f(∆)</code>} 代替 <code>f(S,∆)</code></p><p>State 框架使用者自己使用 <code>f(∆)</code> 注册自己的状态更改算子 ∆。</p><p>State 框架开发者使用 <code>fg(S)</code> ，只管自己传入所有的 State 即可。</p><p>由于 React Hooks 的存在，state 自带使用 <code>f(S,∆)</code> 进行更新的功能。故框架留出 useState() 接口，返回 <code>f(∆)</code> ，供使用者进行状态管理。</p><a href=#redux><h4 id=redux><span class=hanchor arialabel=Anchor># </span>Redux</h4></a><p>Redux 也是基于此函数模型，而在 Hooks 中官方已经使用 <code>useReducer(reducer, initialState)</code> 实现了它。其中 reducer 是设定好的 <code>f(S，∆)</code> ，而它返回 state 和 dispatch，其中 state 就是 Sa 而 dispatch 就是 <code>f(∆)</code>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kd>function</span> <span class=nx>useReducer</span><span class=p>(</span><span class=nx>reducer</span><span class=p>,</span> <span class=nx>initialState</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=nx>setState</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=nx>initialState</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nx>dispatch</span><span class=p>(</span><span class=nx>action</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>nextState</span> <span class=o>=</span> <span class=nx>reducer</span><span class=p>(</span><span class=nx>state</span><span class=p>,</span> <span class=nx>action</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>setState</span><span class=p>(</span><span class=nx>nextState</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=nx>dispatch</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在我们看来，它也内部实现了 Connector 的作用。</p><a href=#实现><h2 id=实现><span class=hanchor arialabel=Anchor># </span>实现</h2></a><a href=#persistence-1><h3 id=persistence-1><span class=hanchor arialabel=Anchor># </span>Persistence</h3></a><p>首先是通过 Hooks 实现存储, 使用 Local Store</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kd>function</span> <span class=nx>useLocalJSONStore</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span> <span class=nx>defaultValue</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=nx>setState</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=p>()</span> <span class=p>=&gt;</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>parse</span><span class=p>(</span><span class=nx>localStorage</span><span class=p>.</span><span class=nx>getItem</span><span class=p>(</span><span class=nx>key</span><span class=p>))</span> <span class=o>||</span> <span class=nx>defaultValue</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>useEffect</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>localStorage</span><span class=p>.</span><span class=nx>setItem</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>state</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span> <span class=p>[</span><span class=nx>key</span><span class=p>,</span> <span class=nx>state</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=nx>setState</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><a href=#存储位置><h4 id=存储位置><span class=hanchor arialabel=Anchor># </span>存储位置</h4></a><p>解决了持久化存储，提供外在的状态管理支持。考虑到我们会使用 Go 来做前端：</p><ol><li>使用 Hooks 加 sqlite3 库本地存储</li><li>使用 Hooks 和 Go 通信完成</li></ol><a href=#connector-1><h3 id=connector-1><span class=hanchor arialabel=Anchor># </span>Connector</h3></a><p>为了使用 Hooks 实现全局的状态通知。</p><p>首先明白 <code>useState()</code> 获取到的 <code>setState()</code> 会触发当前组件的渲染：
+<a href=https://zh-hans.reactjs.org/docs/hooks-state.html rel=noopener>https://zh-hans.reactjs.org/docs/hooks-state.html</a></p><p>Connector 让使用全局状态的组件订阅来连接上全局的状态更新，将自己的 <code>setState()</code> 传入更新队列，当其中任何一个组件使用 <code>dispatch()</code> 更改状态时会触发这个命名空间下的全部状态更新，从而达到刷新所有状态组件的目的。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>useEffect</span> <span class=p>}</span> <span class=nx>from</span> <span class=s2>&#34;react&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>Connector</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>Broadcast</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>state</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>])</span> <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>].</span><span class=nx>forEach</span><span class=p>(</span><span class=nx>setter</span> <span class=p>=&gt;</span> <span class=nx>setter</span><span class=p>(</span><span class=nx>state</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>Subscribe</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>setter</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>])</span> <span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>]</span> <span class=o>=</span><span class=p>[];</span>
+</span></span><span class=line><span class=cl>    <span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>].</span><span class=nx>push</span><span class=p>(</span><span class=nx>setter</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>UnSubscribe</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>setter</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>])</span> <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>index</span> <span class=o>=</span> <span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>].</span><span class=nx>indexOf</span><span class=p>(</span><span class=nx>setter</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>index</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=nx>Connector</span><span class=p>[</span><span class=nx>name</span><span class=p>].</span><span class=nx>splice</span><span class=p>(</span><span class=nx>index</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>connect</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>,</span><span class=nx>setState</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s1>&#39;connect&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>useEffect</span><span class=p>(()</span> <span class=p>=&gt;{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>Subscribe</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>setState</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s1>&#39;subscirbe&#39;</span><span class=p>,</span><span class=nx>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>UnSubscribe</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span><span class=nx>setState</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s1>&#39;unsubscribe&#39;</span><span class=p>,</span><span class=nx>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>},[])</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><a href=#usestore><h3 id=usestore><span class=hanchor arialabel=Anchor># </span>useStore</h3></a><p>使用者使用 <code>useStore()</code> 来获取全局状态和 <code>dispatch()</code> 函数。内部实现就是 State Hook ，并拿到 <code>setState()</code>注册到订阅列表中。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span><span class=nx>Broadcast</span><span class=p>,</span><span class=nx>connect</span><span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;./Connector&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span><span class=nx>useState</span><span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;react&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kd>function</span> <span class=nx>useStore</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span><span class=nx>value</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span><span class=nx>setState</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=nx>value</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>connect</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span><span class=nx>setState</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=p>(</span><span class=nx>key</span><span class=p>,</span><span class=nx>value</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>Broadcast</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span><span class=nx>value</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><a href=#目前状况><h3 id=目前状况><span class=hanchor arialabel=Anchor># </span>目前状况</h3></a><p><img src=https://cdn.nlark.com/yuque/0/2019/svg/176280/1574064167135-22f14865-31ba-4b6c-a144-0d1315954ec1.svg width=auto alt></p><a href=#使用><h2 id=使用><span class=hanchor arialabel=Anchor># </span>使用</h2></a><p>使用 <code>useStore(key, value)</code> 即可。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span><span class=nx>useStore</span><span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;./useStore&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kd>function</span> <span class=nx>Counter</span><span class=p>({</span><span class=nx>key</span><span class=p>,</span><span class=nx>initialCount</span><span class=p>})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// const [count, setCount] = useLocalJSONStore(keyname, initialCount);
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=p>[</span><span class=nx>state</span><span class=p>,</span> <span class=nx>dispatch</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useStore</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span><span class=nx>initialCount</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nx>Count</span><span class=o>:</span> <span class=p>{</span><span class=nx>state</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=nx>button</span> <span class=nx>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=p>=&gt;</span> <span class=nx>dispatch</span><span class=p>(</span><span class=nx>keyname</span><span class=p>,</span><span class=nx>initialCount</span><span class=p>)}</span><span class=o>&gt;</span><span class=nx>Reset</span><span class=o>&lt;</span><span class=err>/button&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=nx>button</span> <span class=nx>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=p>=&gt;</span> <span class=nx>dispatch</span><span class=p>(</span><span class=nx>keyname</span><span class=p>,</span><span class=nx>state</span><span class=o>-</span><span class=mi>1</span><span class=p>)}</span><span class=o>&gt;-&lt;</span><span class=err>/button&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=nx>button</span> <span class=nx>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=p>=&gt;</span> <span class=nx>dispatch</span><span class=p>(</span><span class=nx>keyname</span><span class=p>,</span><span class=nx>state</span><span class=o>+</span><span class=mi>1</span><span class=p>)}</span><span class=o>&gt;+&lt;</span><span class=err>/button&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=err>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://cdn.nlark.com/yuque/0/2019/png/176280/1574063711150-a567cd8c-2117-47ea-8446-02da34624b22.png width=auto alt></p><a href=#进阶><h2 id=进阶><span class=hanchor arialabel=Anchor># </span>进阶</h2></a><ul><li>异步状态</li><li>装饰器</li></ul></article><hr><div class=page-end id=footer><div class=backlinks-container><h3>Backlinks</h3><ul class=backlinks><li>No backlinks found</li></ul></div><div><script src=https://cdn.jsdelivr.net/npm/d3@6.7.0/dist/d3.min.js integrity="sha256-+7jaYCp29O1JusNWHaYtgUn6EhuP0VaFuswhNV06MyI=" crossorigin=anonymous></script><h3>Interactive Graph</h3><div id=graph-container></div><style>:root{--g-node:var(--secondary);--g-node-active:var(--primary);--g-node-inactive:var(--visited);--g-link:var(--outlinegray);--g-link-active:#5a7282}</style><script src=https://notes.abser.top/js/graph.abd4bc2af3869a96524d7d23b76152c7.js></script></div></div><div id=contact_buttons><footer><p>Made by 杨鼎睿 using <a href=https://github.com/abserari/quartz>Quartz</a>, © 2022</p><ul><li><a href=https://notes.abser.top/>Home</a></li><li><a href=https://twitter.com/abserari>Twitter</a></li><li><a href=https://github.com/abserari>Github</a></li></ul></footer></div></div></body></html>

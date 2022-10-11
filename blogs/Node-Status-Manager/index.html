@@ -1,0 +1,300 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=description content="Node Status Manager 
+ReadLink   pkg/kubelet/nodestatus/setters.go  / pkg / kubelet / kubelet_node_status.go  
+Directory Layout 1 2 3  pkg/kubelet/nodestatus |- setters.go |- setters_test.go   
+Setter 1 2 3  // Setter modifies the node in-place, and returns an error if the modification failed."><title>Node Status Manager</title><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" type=image/png href=https://notes.abser.top//icon.png><link href=https://notes.abser.top/styles.7153093e4d1bbb584a28469cadfa3f88.min.css rel=stylesheet><link href=https://notes.abser.top/styles/_light_syntax.86a48a52faebeaaf42158b72922b1c90.min.css rel=stylesheet id=theme-link><script src=https://notes.abser.top/js/darkmode.859bfc1cd0b17406c8e6c095372cb007.min.js></script>
+<script src=https://notes.abser.top/js/util.9825137f5e7825e8553c68ce39ac9e44.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css integrity=sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js integrity=sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/copy-tex.min.js integrity=sha384-ww/583aHhxWkz5DEVn6OKtNiIaLi2iBRNZXfJRiY1Ai7tnJ9UXpEsyvOITVpTl4A crossorigin=anonymous></script>
+<script src=https://unpkg.com/@floating-ui/core@0.7.3></script>
+<script src=https://unpkg.com/@floating-ui/dom@0.5.4></script>
+<script src=https://notes.abser.top/js/popover.53ad9a087e3feeaaa12b63bfd02d923b.min.js></script>
+<script src=https://notes.abser.top/js/code-title.b35124ad8db0ba37162b886afb711cbc.min.js></script>
+<script src=https://notes.abser.top/js/clipboard.c20857734e53a3fb733b7443879efa61.min.js></script>
+<script src=https://notes.abser.top/js/callouts.7723cac461d613d118ee8bb8216b9838.min.js></script>
+<script>const BASE_URL="https://notes.abser.top/",fetchData=Promise.all([fetch("https://notes.abser.top/indices/linkIndex.b905f3b31f0cdee7fde67a58ef8594aa.min.json").then(e=>e.json()).then(e=>({index:e.index,links:e.links})),fetch("https://notes.abser.top/indices/contentIndex.4c34f810e4ad57825e7ec6e1340df7f2.min.json").then(e=>e.json())]).then(([{index:e,links:t},n])=>({index:e,links:t,content:n})),render=()=>{const e=new URL(BASE_URL),t=e.pathname,n=window.location.pathname,s=t==n;addCopyButtons(),addTitleToCodeBlocks(),addCollapsibleCallouts(),initPopover("https://notes.abser.top",!0,!0);const o=document.getElementById("footer");if(o){const e=document.getElementById("graph-container");if(!e)return requestAnimationFrame(render);e.textContent="";const t=s&&!1;drawGraph("https://notes.abser.top",t,[{"/moc":"#4388cc"}],t?{centerForce:1,depth:-1,enableDrag:!0,enableLegend:!1,enableZoom:!0,fontSize:.5,linkDistance:1,opacityScale:3,repelForce:1,scale:1.4}:{centerForce:1,depth:1,enableDrag:!0,enableLegend:!1,enableZoom:!0,fontSize:.6,linkDistance:1,opacityScale:3,repelForce:2,scale:1.2})}},init=(e=document)=>{addCopyButtons(),addTitleToCodeBlocks(),renderMathInElement(e.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}],macros:{'’':"'"},throwOnError:!1})}</script><script type=module>
+    import { attachSPARouting } from "https:\/\/notes.abser.top\/js\/router.9d4974281069e9ebb189f642ae1e3ca2.min.js"
+    attachSPARouting(init, render)
+  </script></head><script async src="https://www.googletagmanager.com/gtag/js?id=G-45QF7GTLZX"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-45QF7GTLZX",{anonymize_ip:!1})}</script><body><div id=search-container><div id=search-space><input autocomplete=off id=search-bar name=search type=text aria-label=Search placeholder="Search for something..."><div id=results-container></div></div></div><script src=https://cdn.jsdelivr.net/npm/flexsearch@0.7.21/dist/flexsearch.bundle.js integrity="sha256-i3A0NZGkhsKjVMzFxv3ksk0DZh3aXqu0l49Bbh0MdjE=" crossorigin=anonymous defer></script>
+<script defer src=https://notes.abser.top/js/full-text-search.24827f874defbbc6d529926cbfcfb493.min.js></script><div class=singlePage><header><h1 id=page-title><a href=https://notes.abser.top/>😊杨鼎睿的笔记</a></h1><div class=spacer></div><div id=search-icon><p>Search</p><svg tabindex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search Icon</title><desc id="desc">Icon to open search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/><circle cx="8" cy="8" r="7"/></g></svg></div><div class=darkmode><input class=toggle id=darkmode-toggle type=checkbox tabindex=-1>
+<label id=toggle-label-light for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="dayIcon" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35"><title>Light Mode</title><path d="M6 17.5C6 16.672 5.328 16 4.5 16h-3C.672 16 0 16.672.0 17.5S.672 19 1.5 19h3C5.328 19 6 18.328 6 17.5zM7.5 26c-.414.0-.789.168-1.061.439l-2 2C4.168 28.711 4 29.086 4 29.5 4 30.328 4.671 31 5.5 31c.414.0.789-.168 1.06-.44l2-2C8.832 28.289 9 27.914 9 27.5 9 26.672 8.329 26 7.5 26zm10-20C18.329 6 19 5.328 19 4.5v-3C19 .672 18.329.0 17.5.0S16 .672 16 1.5v3C16 5.328 16.671 6 17.5 6zm10 3c.414.0.789-.168 1.06-.439l2-2C30.832 6.289 31 5.914 31 5.5 31 4.672 30.329 4 29.5 4c-.414.0-.789.168-1.061.44l-2 2C26.168 6.711 26 7.086 26 7.5 26 8.328 26.671 9 27.5 9zM6.439 8.561C6.711 8.832 7.086 9 7.5 9 8.328 9 9 8.328 9 7.5c0-.414-.168-.789-.439-1.061l-2-2C6.289 4.168 5.914 4 5.5 4 4.672 4 4 4.672 4 5.5c0 .414.168.789.439 1.06l2 2.001zM33.5 16h-3c-.828.0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5h3c.828.0 1.5-.672 1.5-1.5S34.328 16 33.5 16zM28.561 26.439C28.289 26.168 27.914 26 27.5 26c-.828.0-1.5.672-1.5 1.5.0.414.168.789.439 1.06l2 2C28.711 30.832 29.086 31 29.5 31c.828.0 1.5-.672 1.5-1.5.0-.414-.168-.789-.439-1.061l-2-2zM17.5 29c-.829.0-1.5.672-1.5 1.5v3c0 .828.671 1.5 1.5 1.5s1.5-.672 1.5-1.5v-3C19 29.672 18.329 29 17.5 29zm0-22C11.71 7 7 11.71 7 17.5S11.71 28 17.5 28 28 23.29 28 17.5 23.29 7 17.5 7zm0 18c-4.136.0-7.5-3.364-7.5-7.5s3.364-7.5 7.5-7.5 7.5 3.364 7.5 7.5S21.636 25 17.5 25z"/></svg></label><label id=toggle-label-dark for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="nightIcon" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'"><title>Dark Mode</title><path d="M96.76 66.458c-.853-.852-2.15-1.064-3.23-.534-6.063 2.991-12.858 4.571-19.655 4.571C62.022 70.495 50.88 65.88 42.5 57.5 29.043 44.043 25.658 23.536 34.076 6.47c.532-1.08.318-2.379-.534-3.23-.851-.852-2.15-1.064-3.23-.534-4.918 2.427-9.375 5.619-13.246 9.491-9.447 9.447-14.65 22.008-14.65 35.369.0 13.36 5.203 25.921 14.65 35.368s22.008 14.65 35.368 14.65c13.361.0 25.921-5.203 35.369-14.65 3.872-3.871 7.064-8.328 9.491-13.246C97.826 68.608 97.611 67.309 96.76 66.458z"/></svg></label></div></header><article><h1>Node Status Manager</h1><p class=meta>Last updated
+Aug 5, 2016
+<a href=https://github.com/abserari/quartz/tree/hugo/content/blogs/Node%20Status%20Manager.md rel=noopener>Edit Source</a></p><ul class=tags></ul><aside class=mainTOC><details open><summary>Table of Contents</summary><nav id=TableOfContents><ol><li><a href=#node-status-manager>Node Status Manager</a></li><li><a href=#readlink>ReadLink</a></li><li><a href=#directory-layout>Directory Layout</a></li><li><a href=#setter>Setter</a></li><li><a href=#setter-list>Setter List</a></li><li><a href=#kubelet-node-status>Kubelet Node Status</a><ol><li><a href=#setter-使用处>Setter 使用处</a></li></ol></li><li><a href=#syncnodestatus-procedure>SyncNodeStatus Procedure</a><ol><li><a href=#入口-entry>入口 Entry</a></li><li><a href=#注册-registerwithapiserver>注册 RegisterWithAPIserver</a></li><li><a href=#use-setter>Use Setter</a></li></ol></li><li><a href=#conclusion>Conclusion</a></li></ol></nav></details></aside><a href=#node-status-manager><h2 id=node-status-manager><span class=hanchor arialabel=Anchor># </span>Node Status Manager</h2></a><p><a name=eQr2o></a></p><a href=#readlink><h2 id=readlink><span class=hanchor arialabel=Anchor># </span>ReadLink</h2></a><ul><li><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes/-/blob/pkg/kubelet/nodestatus/setters.go rel=noopener>pkg/kubelet/nodestatus/setters.go</a></li><li><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e rel=noopener>/</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg rel=noopener>pkg /</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg/kubelet rel=noopener>kubelet /</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go rel=noopener>kubelet_node_status.go</a></li></ul><p><a name=HvtiD></a></p><a href=#directory-layout><h2 id=directory-layout><span class=hanchor arialabel=Anchor># </span>Directory Layout</h2></a><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>pkg</span><span class=o>/</span><span class=nx>kubelet</span><span class=o>/</span><span class=nx>nodestatus</span>
+</span></span><span class=line><span class=cl> <span class=p>|</span><span class=o>-</span> <span class=nx>setters</span><span class=p>.</span><span class=k>go</span>
+</span></span><span class=line><span class=cl> <span class=p>|</span><span class=o>-</span> <span class=nx>setters_test</span><span class=p>.</span><span class=k>go</span>
+</span></span></code></pre></td></tr></table></div></div><p><a name=ABxjo></a></p><a href=#setter><h2 id=setter><span class=hanchor arialabel=Anchor># </span>Setter</h2></a><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// Setter modifies the node in-place, and returns an error if the modification failed.
+</span></span></span><span class=line><span class=cl><span class=c1>// Setters may partially mutate the node before returning an error.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>type</span> <span class=nx>Setter</span> <span class=kd>func</span><span class=p>(</span><span class=nx>node</span> <span class=o>*</span><span class=nx>v1</span><span class=p>.</span><span class=nx>Node</span><span class=p>)</span> <span class=kt>error</span>
+</span></span></code></pre></td></tr></table></div></div><p>the Setter function defines a function that performs operations on the v1.Node object. If an error is returned, the Node object may also be changed.
+From the function definition, you can see its usage: use functions to generate different setters for a class of modification of Node objects. In this way, you can modify the state of a Node.
+Use the simplest func GoRuntime() Setter example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// GoRuntime returns a Setter that sets GOOS and GOARCH on the node.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>GoRuntime</span><span class=p>()</span> <span class=nx>Setter</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>node</span> <span class=o>*</span><span class=nx>v1</span><span class=p>.</span><span class=nx>Node</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>node</span><span class=p>.</span><span class=nx>Status</span><span class=p>.</span><span class=nx>NodeInfo</span><span class=p>.</span><span class=nx>OperatingSystem</span> <span class=p>=</span> <span class=nx>goruntime</span><span class=p>.</span><span class=nx>GOOS</span>
+</span></span><span class=line><span class=cl>		<span class=nx>node</span><span class=p>.</span><span class=nx>Status</span><span class=p>.</span><span class=nx>NodeInfo</span><span class=p>.</span><span class=nx>Architecture</span> <span class=p>=</span> <span class=nx>goruntime</span><span class=p>.</span><span class=nx>GOARCH</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>this mode belongs to the middleware operation mode. You can contact middleware for understanding.
+<a name=E3eSp></a></p><a href=#setter-list><h2 id=setter-list><span class=hanchor arialabel=Anchor># </span>Setter List</h2></a><p>we learned the setter mode changed by Node status. Currently, the code contains the following 12 setters:</p><ul><li>**NodeAddress **returns a Setter that updates address-related information on the node.：updates address-related fields, such as IP address and hostname (typically the hostname variable in kubelet).</li><li>**MachineInfo **returns a Setter that updates machine-related information on the node.：updates fields related to host information, such as the maximum number of pods, the number of pods allocated to each core, and the number of resources.</li><li>**VersionInfo **returns a Setter that updates version-related information on the node.：containerRuntime version, cadvisor version</li><li>**DaemonEndpoints **returns a Setter that updates the daemon endpoints on the node.</li><li>**Images **returns a Setter that updates the images on the node.：updates image information.</li><li>**GoRuntime **returns a Setter that sets GOOS and GOARCH on the node.：GOOS GOARCH information</li><li><strong>ReadyCondition</strong> returns a Setter that updates the v1.NodeReady condition on the node.：determines whether the node is in the Ready state from Kubelet fields such as the error return function in the runtimeState.</li><li>**MemoryPressureCondition **returns a Setter that updates the v1.NodeMemoryPressure condition on the node.</li><li>**PIDPressureCondition **returns a Setter that updates the v1.NodePIDPressure condition on the node.</li><li>**DiskPressureCondition **returns a Setter that updates the v1.NodeDiskPressure condition on the node.</li><li>**VolumesInUse **returns a Setter that updates the volumes in use on the node.</li><li>**VolumeLimits **returns a Setter that updates the volume limits on the node.</li></ul><p>Setter 的入参通常是 Kubelet 中的字段，自然使用是通过 Kubelet 去初始化使用。
+<a name=uRi9a></a></p><a href=#kubelet-node-status><h2 id=kubelet-node-status><span class=hanchor arialabel=Anchor># </span>Kubelet Node Status</h2></a><p><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e rel=noopener>/</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg rel=noopener>pkg /</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/tree/pkg/kubelet rel=noopener>kubelet /</a>
+<a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go rel=noopener>kubelet_node_status.go</a>
+<a name=LGGvP></a></p><a href=#setter-使用处><h3 id=setter-使用处><span class=hanchor arialabel=Anchor># </span>Setter 使用处</h3></a><p>after all setters are initialized in the defaultNodeStatusFuncs function, the function returns a Setter array.</p><p><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go?L613 rel=noopener>kubelet_node_status.go? L613</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// defaultNodeStatusFuncs is a factory that generates the default set of
+</span></span></span><span class=line><span class=cl><span class=c1>// setNodeStatus funcs
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=p>(</span><span class=nx>kl</span> <span class=o>*</span><span class=nx>Kubelet</span><span class=p>)</span> <span class=nf>defaultNodeStatusFuncs</span><span class=p>()</span> <span class=p>[]</span><span class=kd>func</span><span class=p>(</span><span class=o>*</span><span class=nx>v1</span><span class=p>.</span><span class=nx>Node</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// if cloud is not nil, we expect the cloud resource sync manager to exist
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=kd>var</span> <span class=nx>nodeAddressesFunc</span> <span class=kd>func</span><span class=p>()</span> <span class=p>([]</span><span class=nx>v1</span><span class=p>.</span><span class=nx>NodeAddress</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>cloud</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodeAddressesFunc</span> <span class=p>=</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>cloudResourceSyncManager</span><span class=p>.</span><span class=nx>NodeAddresses</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>validateHostFunc</span> <span class=kd>func</span><span class=p>()</span> <span class=kt>error</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>appArmorValidator</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>validateHostFunc</span> <span class=p>=</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>appArmorValidator</span><span class=p>.</span><span class=nx>ValidateHost</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>setters</span> <span class=p>[]</span><span class=kd>func</span><span class=p>(</span><span class=nx>n</span> <span class=o>*</span><span class=nx>v1</span><span class=p>.</span><span class=nx>Node</span><span class=p>)</span> <span class=kt>error</span>
+</span></span><span class=line><span class=cl>	<span class=nx>setters</span> <span class=p>=</span> <span class=nb>append</span><span class=p>(</span><span class=nx>setters</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>NodeAddress</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>nodeIPs</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>nodeIPValidator</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>hostname</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>hostnameOverridden</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>externalCloudProvider</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>cloud</span><span class=p>,</span> <span class=nx>nodeAddressesFunc</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>MachineInfo</span><span class=p>(</span><span class=nb>string</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>nodeName</span><span class=p>),</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>maxPods</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>podsPerCore</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>GetCachedMachineInfo</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>containerManager</span><span class=p>.</span><span class=nx>GetCapacity</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>			<span class=nx>kl</span><span class=p>.</span><span class=nx>containerManager</span><span class=p>.</span><span class=nx>GetDevicePluginResourceCapacity</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>containerManager</span><span class=p>.</span><span class=nx>GetNodeAllocatableReservation</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>recordEvent</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>VersionInfo</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>cadvisor</span><span class=p>.</span><span class=nx>VersionInfo</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>containerRuntime</span><span class=p>.</span><span class=nx>Type</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>containerRuntime</span><span class=p>.</span><span class=nx>Version</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>DaemonEndpoints</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>daemonEndpoints</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>Images</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>nodeStatusMaxImages</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>imageManager</span><span class=p>.</span><span class=nx>GetImageList</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>GoRuntime</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>	<span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Volume limits
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>setters</span> <span class=p>=</span> <span class=nb>append</span><span class=p>(</span><span class=nx>setters</span><span class=p>,</span> <span class=nx>nodestatus</span><span class=p>.</span><span class=nf>VolumeLimits</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>volumePluginMgr</span><span class=p>.</span><span class=nx>ListVolumePluginWithLimits</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>setters</span> <span class=p>=</span> <span class=nb>append</span><span class=p>(</span><span class=nx>setters</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>MemoryPressureCondition</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>clock</span><span class=p>.</span><span class=nx>Now</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>evictionManager</span><span class=p>.</span><span class=nx>IsUnderMemoryPressure</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>recordNodeStatusEvent</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>DiskPressureCondition</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>clock</span><span class=p>.</span><span class=nx>Now</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>evictionManager</span><span class=p>.</span><span class=nx>IsUnderDiskPressure</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>recordNodeStatusEvent</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>PIDPressureCondition</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>clock</span><span class=p>.</span><span class=nx>Now</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>evictionManager</span><span class=p>.</span><span class=nx>IsUnderPIDPressure</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>recordNodeStatusEvent</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>ReadyCondition</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>clock</span><span class=p>.</span><span class=nx>Now</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>runtimeState</span><span class=p>.</span><span class=nx>runtimeErrors</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>runtimeState</span><span class=p>.</span><span class=nx>networkErrors</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>runtimeState</span><span class=p>.</span><span class=nx>storageErrors</span><span class=p>,</span> <span class=nx>validateHostFunc</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>containerManager</span><span class=p>.</span><span class=nx>Status</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>shutdownManager</span><span class=p>.</span><span class=nx>ShutdownStatus</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>recordNodeStatusEvent</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=nx>nodestatus</span><span class=p>.</span><span class=nf>VolumesInUse</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>volumeManager</span><span class=p>.</span><span class=nx>ReconcilerStatesHasBeenSynced</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>volumeManager</span><span class=p>.</span><span class=nx>GetVolumesInUse</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// TODO(mtaufen): I decided not to move this setter for now, since all it does is send an event
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=c1>// and record state back to the Kubelet runtime object. In the future, I&#39;d like to isolate
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=c1>// these side-effects by decoupling the decisions to send events and partial status recording
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=c1>// from the Node setters.
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=nx>kl</span><span class=p>.</span><span class=nx>recordNodeSchedulableEvent</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>setters</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The array is assigned to the setNodeStatusFuncs of kubelet.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl>	<span class=c1>// Generating the status funcs should be the last thing we do,
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=c1>// since this relies on the rest of the Kubelet having been constructed.
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>klet</span><span class=p>.</span><span class=nx>setNodeStatusFuncs</span> <span class=p>=</span> <span class=nx>klet</span><span class=p>.</span><span class=nf>defaultNodeStatusFuncs</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p><a name=n0m8P></a></p><a href=#syncnodestatus-procedure><h2 id=syncnodestatus-procedure><span class=hanchor arialabel=Anchor># </span>SyncNodeStatus Procedure</h2></a><p>how do Kubelet use these Kubelet? The core is syncNodeStatus functions.</p><p><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go?L435 rel=noopener>kubelet_node_status</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// syncNodeStatus should be called periodically from a goroutine.
+</span></span></span><span class=line><span class=cl><span class=c1>// It synchronizes node status to master if there is any change or enough time
+</span></span></span><span class=line><span class=cl><span class=c1>// passed from the last sync, registering the kubelet first if necessary.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=p>(</span><span class=nx>kl</span> <span class=o>*</span><span class=nx>Kubelet</span><span class=p>)</span> <span class=nf>syncNodeStatus</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>kl</span><span class=p>.</span><span class=nx>syncNodeStatusMux</span><span class=p>.</span><span class=nf>Lock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>defer</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>syncNodeStatusMux</span><span class=p>.</span><span class=nf>Unlock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>kubeClient</span> <span class=o>==</span> <span class=kc>nil</span> <span class=o>||</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>heartbeatClient</span> <span class=o>==</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>registerNode</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// This will exit immediately if it doesn&#39;t need to do anything.
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=nx>kl</span><span class=p>.</span><span class=nf>registerWithAPIServer</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>kl</span><span class=p>.</span><span class=nf>updateNodeStatus</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>klog</span><span class=p>.</span><span class=nf>ErrorS</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=s>&#34;Unable to update node status&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>syncNodeStatus the function is called periodically in goroutine to synchronize the node status to the master.
+<a name=bdMgb></a></p><a href=#入口-entry><h3 id=入口-entry><span class=hanchor arialabel=Anchor># </span>入口 Entry</h3></a><p>currently, it is called in three places:</p><ol><li><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet.go?L1428:26 rel=noopener>kubelet.go? L1428:26</a>
+in the Run function of the Kubelet, start goroutine for periodic synchronization.</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>go</span> <span class=nx>wait</span><span class=p>.</span><span class=nf>JitterUntil</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>syncNodeStatus</span><span class=p>,</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>nodeStatusUpdateFrequency</span><span class=p>,</span> <span class=mf>0.04</span><span class=p>,</span> <span class=kc>true</span><span class=p>,</span> <span class=nx>wait</span><span class=p>.</span><span class=nx>NeverStop</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet.go?L2433:7 rel=noopener>kubelet.go? L2433:7</a>
+: performs one-time synchronization in the fastStatusUpdateOnce function.</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>kl</span> <span class=o>*</span><span class=nx>Kubelet</span><span class=p>)</span> <span class=nf>fastStatusUpdateOnce</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=nx>kl</span><span class=p>.</span><span class=nf>syncNodeStatus</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/nodeshutdown/nodeshutdown_manager_linux.go?L283:11 rel=noopener>nodeshutdown_manager_linux.go? L283:11</a>
+: it is called in the start() function of nodeshutdownmanager, which is actually a goroutine and is triggered only after the shutdown event is received from the channel.</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>if</span> <span class=nx>isShuttingDown</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Update node status and ready condition
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>go</span> <span class=nx>m</span><span class=p>.</span><span class=nf>syncNodeStatus</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>m</span><span class=p>.</span><span class=nf>processShutdownEvent</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> 
+</span></span></code></pre></td></tr></table></div></div><p><a name=FKaYq></a></p><a href=#注册-registerwithapiserver><h3 id=注册-registerwithapiserver><span class=hanchor arialabel=Anchor># </span>注册 RegisterWithAPIserver</h3></a><p>if kubelet needs to be registered, a for loop is executed to wait for registration to the APIServer.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=nx>step</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>step</span> <span class=p>=</span> <span class=nx>step</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nx>step</span> <span class=o>&gt;=</span> <span class=mi>7</span><span class=o>*</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>step</span> <span class=p>=</span> <span class=mi>7</span> <span class=o>*</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Second</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 1. 获取 node 对象及其信息
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>node</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>kl</span><span class=p>.</span><span class=nf>initialNode</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>TODO</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>klog</span><span class=p>.</span><span class=nf>ErrorS</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=s>&#34;Unable to construct v1.Node object for kubelet&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>continue</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>klog</span><span class=p>.</span><span class=nf>InfoS</span><span class=p>(</span><span class=s>&#34;Attempting to register node&#34;</span><span class=p>,</span> <span class=s>&#34;node&#34;</span><span class=p>,</span> <span class=nx>klog</span><span class=p>.</span><span class=nf>KObj</span><span class=p>(</span><span class=nx>node</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 2. 注册到 APIServer 中去
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>registered</span> <span class=o>:=</span> <span class=nx>kl</span><span class=p>.</span><span class=nf>tryRegisterWithAPIServer</span><span class=p>(</span><span class=nx>node</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nx>registered</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>klog</span><span class=p>.</span><span class=nf>InfoS</span><span class=p>(</span><span class=s>&#34;Successfully registered node&#34;</span><span class=p>,</span> <span class=s>&#34;node&#34;</span><span class=p>,</span> <span class=nx>klog</span><span class=p>.</span><span class=nf>KObj</span><span class=p>(</span><span class=nx>node</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=nx>kl</span><span class=p>.</span><span class=nx>registrationCompleted</span> <span class=p>=</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol><li>node, err := kl.initialNode(context.TODO()) : obtains the node object and its information.</li><li>registered := kl.tryRegisterWithAPIServer(node) : Register to APIServer</li></ol><p><a name=bj9z5></a></p><a href=#use-setter><h3 id=use-setter><span class=hanchor arialabel=Anchor># </span>Use Setter</h3></a><dl><dt><a href=https://sourcegraph.com/github.com/kubernetes/kubernetes@d2c5779dadc9ed7a462c36bc280b2f9a200c571e/-/blob/pkg/kubelet/kubelet_node_status.go?L470:20 rel=noopener>Function tryUpdateNodeStatus (kubelet_node_status.go? L470:20)</a></dt><dd>the processing part of the volumeManager is omitted.</dd></dl><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// tryUpdateNodeStatus tries to update node status to master if there is any
+</span></span></span><span class=line><span class=cl><span class=c1>// change or enough time passed from the last sync.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=p>(</span><span class=nx>kl</span> <span class=o>*</span><span class=nx>Kubelet</span><span class=p>)</span> <span class=nf>tryUpdateNodeStatus</span><span class=p>(</span><span class=nx>tryNumber</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>originalNode</span> <span class=o>:=</span> <span class=nx>node</span><span class=p>.</span><span class=nf>DeepCopy</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl>	<span class=nx>kl</span><span class=p>.</span><span class=nf>setNodeStatus</span><span class=p>(</span><span class=nx>node</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Patch the current status on the API server
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>updatedNode</span><span class=p>,</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>nodeutil</span><span class=p>.</span><span class=nf>PatchNodeStatus</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>heartbeatClient</span><span class=p>.</span><span class=nf>CoreV1</span><span class=p>(),</span> <span class=nx>types</span><span class=p>.</span><span class=nf>NodeName</span><span class=p>(</span><span class=nx>kl</span><span class=p>.</span><span class=nx>nodeName</span><span class=p>),</span> <span class=nx>originalNode</span><span class=p>,</span> <span class=nx>node</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>kl.setNodeStatus just traverses all the Setter functions we mentioned just now.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>kl</span> <span class=o>*</span><span class=nx>Kubelet</span><span class=p>)</span> <span class=nf>setNodeStatus</span><span class=p>(</span><span class=nx>node</span> <span class=o>*</span><span class=nx>v1</span><span class=p>.</span><span class=nx>Node</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span><span class=p>,</span> <span class=nx>f</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>kl</span><span class=p>.</span><span class=nx>setNodeStatusFuncs</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>klog</span><span class=p>.</span><span class=nf>V</span><span class=p>(</span><span class=mi>5</span><span class=p>).</span><span class=nf>InfoS</span><span class=p>(</span><span class=s>&#34;Setting node status condition code&#34;</span><span class=p>,</span> <span class=s>&#34;position&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>,</span> <span class=s>&#34;node&#34;</span><span class=p>,</span> <span class=nx>klog</span><span class=p>.</span><span class=nf>KObj</span><span class=p>(</span><span class=nx>node</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nf>f</span><span class=p>(</span><span class=nx>node</span><span class=p>);</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=nx>klog</span><span class=p>.</span><span class=nf>ErrorS</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=s>&#34;Failed to set some node status fields&#34;</span><span class=p>,</span> <span class=s>&#34;node&#34;</span><span class=p>,</span> <span class=nx>klog</span><span class=p>.</span><span class=nf>KObj</span><span class=p>(</span><span class=nx>node</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p><a name=GWa5D></a></p><a href=#conclusion><h2 id=conclusion><span class=hanchor arialabel=Anchor># </span>Conclusion</h2></a><p>we have learned:</p><ol><li>what are the change functions of the Node Status and what rules are followed to sign the function.</li><li>how to register a Setter function to a Kubelet.</li><li>Kubelet when these setters are called to change the status of a Node.</li></ol><p>Next:</p><ol><li>you can try to add a custom setter function.</li><li>Kubernetes code is not as neat as the design. Some todo can be changed after reading this article and code. Try to decouple the code. (You can also find it by searching todo in the code.)</li></ol></article><hr><div class=page-end id=footer><div class=backlinks-container><h3>Backlinks</h3><ul class=backlinks><li>No backlinks found</li></ul></div><div><script src=https://cdn.jsdelivr.net/npm/d3@6.7.0/dist/d3.min.js integrity="sha256-+7jaYCp29O1JusNWHaYtgUn6EhuP0VaFuswhNV06MyI=" crossorigin=anonymous></script><h3>Interactive Graph</h3><div id=graph-container></div><style>:root{--g-node:var(--secondary);--g-node-active:var(--primary);--g-node-inactive:var(--visited);--g-link:var(--outlinegray);--g-link-active:#5a7282}</style><script src=https://notes.abser.top/js/graph.abd4bc2af3869a96524d7d23b76152c7.js></script></div></div><div id=contact_buttons><footer><p>Made by 杨鼎睿 using <a href=https://github.com/abserari/quartz>Quartz</a>, © 2022</p><ul><li><a href=https://notes.abser.top/>Home</a></li><li><a href=https://twitter.com/abserari>Twitter</a></li><li><a href=https://github.com/abserari>Github</a></li></ul></footer></div></div></body></html>
