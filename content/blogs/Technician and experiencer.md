@@ -1,6 +1,7 @@
 ---
 title: "Technician and experiencer"
 tags:
+- 博客
 date:   2016-08-05 20:20:56 -0400
 ---
 ## Technician and experiencer

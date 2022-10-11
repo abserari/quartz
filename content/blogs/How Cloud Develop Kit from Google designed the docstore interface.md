@@ -1,6 +1,7 @@
 ---
 title: "How Cloud Develop Kit from Google designed the docstore interface"
 tags:
+- 博客
 date:   2016-08-05 20:20:56 -0400
 ---
 
