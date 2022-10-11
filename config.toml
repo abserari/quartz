@@ -8,8 +8,8 @@ ignoreFiles = [
     # 这个都不用屏蔽，由于本身已经被 .gitignore 屏蔽了
     # "/content/private/*",
 ]
-summaryLength = 20
-paginate = 10
+summaryLength = 40
+paginate = 30
 enableGitInfo = true
 
 [markup]

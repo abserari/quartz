@@ -9,58 +9,34 @@
         },
         {
           "source": "/",
-          "target": "/hugo-extended",
-          "text": "hugo-extended"
+          "target": "/notes/hugo-extended",
+          "text": "notes/hugo-extended"
         },
         {
           "source": "/",
-          "target": "/hugo-obsidian",
-          "text": "hugo-obsidian"
+          "target": "/notes/hugo-obsidian",
+          "text": "notes/hugo-obsidian"
         }
       ],
-      "/PriceOps": [
+      "/blogs/Role-of-microservice-framework": [
         {
-          "source": "/PriceOps",
-          "target": "/PriceOps",
-          "text": "PriceOps"
-        }
-      ],
-      "/Pricing-as-Code": [
-        {
-          "source": "/Pricing-as-Code",
-          "target": "/PriceOps",
-          "text": "PriceOps"
-        },
-        {
-          "source": "/Pricing-as-Code",
-          "target": "/Tier",
-          "text": "Tier"
-        }
-      ],
-      "/Tier": [
-        {
-          "source": "/Tier",
-          "target": "/Pricing-as-Code",
-          "text": "Pricing as Code"
-        },
-        {
-          "source": "/Tier",
-          "target": "/PriceOps",
-          "text": "PriceOps"
+          "source": "/blogs/Role-of-microservice-framework",
+          "target": "/",
+          "text": "Mongo Doc access design"
         }
       ],
       "/diary/2022-09-28": [
         {
           "source": "/diary/2022-09-28",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-          "text": "为什么学习稀缺的技能"
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+          "text": "notes/为什么学习稀缺的技能"
         }
       ],
       "/diary/2022-09-30": [
         {
           "source": "/diary/2022-09-30",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-          "text": "为什么学习稀缺的技能"
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+          "text": "notes/为什么学习稀缺的技能"
         }
       ],
       "/diary/2022-10-08": [
@@ -86,23 +62,23 @@
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
-          "text": "Dockerfile 多行脚本"
+          "target": "/notes/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
+          "text": "notes/Dockerfile 多行脚本"
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/rocksdb",
-          "text": "rocksdb"
+          "target": "/notes/rocksdb",
+          "text": "notes/rocksdb"
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/LSMs",
-          "text": "LSMs"
+          "target": "/notes/LSMs",
+          "text": "notes/LSMs"
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/rocksdb",
-          "text": "rocksdb"
+          "target": "/notes/rocksdb",
+          "text": "notes/rocksdb"
         },
         {
           "source": "/diary/2022-10-08",
@@ -116,8 +92,8 @@
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
-          "text": "为什么我们在RocksDB上创建CockroachDB项目？"
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
+          "text": "notes/为什么我们在RocksDB上创建CockroachDB项目？"
         },
         {
           "source": "/diary/2022-10-08",
@@ -146,8 +122,8 @@
         },
         {
           "source": "/diary/2022-10-08",
-          "target": "/maigret",
-          "text": "maigret"
+          "target": "/notes/maigret",
+          "text": "notes/maigret"
         }
       ],
       "/diary/2022-10-09": [
@@ -158,67 +134,84 @@
         },
         {
           "source": "/diary/2022-10-09",
-          "target": "/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
-          "text": "使用 quartz 托管 obsidian 到网络上"
+          "target": "/notes/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
+          "text": "notes/使用 quartz 托管 obsidian 到网络上"
         },
         {
           "source": "/diary/2022-10-09",
-          "target": "/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
-          "text": "清理 GIt 中的历史文件"
+          "target": "/notes/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
+          "text": "notes/清理 GIt 中的历史文件"
         }
       ],
       "/diary/2022-10-10": [
         {
           "source": "/diary/2022-10-10",
-          "target": "/Pricing-as-Code",
-          "text": "Pricing as Code"
+          "target": "/notes/Pricing-as-Code",
+          "text": "notes/Pricing as Code"
         },
         {
           "source": "/diary/2022-10-10",
-          "target": "/Tier",
-          "text": "Tier"
+          "target": "/notes/Tier",
+          "text": "notes/Tier"
         }
       ],
-      "/hugo-obsidian": [
+      "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F": [
         {
-          "source": "/hugo-obsidian",
-          "target": "/Golang",
-          "text": "Golang"
+          "source": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+          "target": "/notes/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B",
+          "text": "notes/鸭子类型"
+        }
+      ],
+      "/notes/PriceOps": [
+        {
+          "source": "/notes/PriceOps",
+          "target": "/pillar",
+          "text": "pillar"
+        },
+        {
+          "source": "/notes/PriceOps",
+          "target": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+          "text": "notes/逐步描述一个新模型的方式"
+        }
+      ],
+      "/notes/Pricing-as-Code": [
+        {
+          "source": "/notes/Pricing-as-Code",
+          "target": "/notes/PriceOps",
+          "text": "notes/PriceOps"
+        },
+        {
+          "source": "/notes/Pricing-as-Code",
+          "target": "/notes/Tier",
+          "text": "notes/Tier"
+        }
+      ],
+      "/notes/Tier": [
+        {
+          "source": "/notes/Tier",
+          "target": "/notes/Pricing-as-Code",
+          "text": "notes/Pricing as Code"
+        },
+        {
+          "source": "/notes/Tier",
+          "target": "/notes/PriceOps",
+          "text": "notes/PriceOps"
+        }
+      ],
+      "/notes/hugo-obsidian": [
+        {
+          "source": "/notes/hugo-obsidian",
+          "target": "/notes/Golang",
+          "text": "notes/Golang"
         }
       ]
     },
     "backlinks": {
-      "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD": [
+      "/": [
         {
-          "source": "/diary/2022-09-28",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-          "text": "为什么学习稀缺的技能"
-        },
-        {
-          "source": "/diary/2022-09-30",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-          "text": "为什么学习稀缺的技能"
-        }
-      ],
-      "/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE": [
-        {
-          "source": "/diary/2022-10-08",
-          "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
-          "text": "为什么我们在RocksDB上创建CockroachDB项目？"
-        }
-      ],
-      "/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A": [
-        {
-          "source": "/diary/2022-10-09",
-          "target": "/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
-          "text": "使用 quartz 托管 obsidian 到网络上"
-        }
-      ],
-      "/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6": [
-        {
-          "source": "/diary/2022-10-09",
-          "target": "/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
-          "text": "清理 GIt 中的历史文件"
+          "source": "/blogs/Role-of-microservice-framework",
+          "target": "/",
+          "text": "Mongo Doc access design"
         }
       ],
       "/2022-10-08": [
@@ -235,32 +228,11 @@
           "text": "Dockerfile"
         }
       ],
-      "/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC": [
-        {
-          "source": "/diary/2022-10-08",
-          "target": "/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
-          "text": "Dockerfile 多行脚本"
-        }
-      ],
-      "/Golang": [
-        {
-          "source": "/hugo-obsidian",
-          "target": "/Golang",
-          "text": "Golang"
-        }
-      ],
       "/Google": [
         {
           "source": "/diary/2022-10-08",
           "target": "/Google",
           "text": "Google"
-        }
-      ],
-      "/LSMs": [
-        {
-          "source": "/diary/2022-10-08",
-          "target": "/LSMs",
-          "text": "LSMs"
         }
       ],
       "/LevelDB": [
@@ -277,47 +249,6 @@
           "text": "MnicTime"
         }
       ],
-      "/PriceOps": [
-        {
-          "source": "/PriceOps",
-          "target": "/PriceOps",
-          "text": "PriceOps"
-        },
-        {
-          "source": "/Pricing-as-Code",
-          "target": "/PriceOps",
-          "text": "PriceOps"
-        },
-        {
-          "source": "/Tier",
-          "target": "/PriceOps",
-          "text": "PriceOps"
-        }
-      ],
-      "/Pricing-as-Code": [
-        {
-          "source": "/Tier",
-          "target": "/Pricing-as-Code",
-          "text": "Pricing as Code"
-        },
-        {
-          "source": "/diary/2022-10-10",
-          "target": "/Pricing-as-Code",
-          "text": "Pricing as Code"
-        }
-      ],
-      "/Tier": [
-        {
-          "source": "/Pricing-as-Code",
-          "target": "/Tier",
-          "text": "Tier"
-        },
-        {
-          "source": "/diary/2022-10-10",
-          "target": "/Tier",
-          "text": "Tier"
-        }
-      ],
       "/buildkit": [
         {
           "source": "/diary/2022-10-08",
@@ -332,20 +263,6 @@
           "text": "envd"
         }
       ],
-      "/hugo-extended": [
-        {
-          "source": "/",
-          "target": "/hugo-extended",
-          "text": "hugo-extended"
-        }
-      ],
-      "/hugo-obsidian": [
-        {
-          "source": "/",
-          "target": "/hugo-obsidian",
-          "text": "hugo-obsidian"
-        }
-      ],
       "/jupyter-nodebook": [
         {
           "source": "/diary/2022-10-08",
@@ -353,11 +270,141 @@
           "text": "jupyter nodebook"
         }
       ],
-      "/maigret": [
+      "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD": [
+        {
+          "source": "/diary/2022-09-28",
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+          "text": "notes/为什么学习稀缺的技能"
+        },
+        {
+          "source": "/diary/2022-09-30",
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+          "text": "notes/为什么学习稀缺的技能"
+        }
+      ],
+      "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE": [
         {
           "source": "/diary/2022-10-08",
-          "target": "/maigret",
-          "text": "maigret"
+          "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
+          "text": "notes/为什么我们在RocksDB上创建CockroachDB项目？"
+        }
+      ],
+      "/notes/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A": [
+        {
+          "source": "/diary/2022-10-09",
+          "target": "/notes/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
+          "text": "notes/使用 quartz 托管 obsidian 到网络上"
+        }
+      ],
+      "/notes/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6": [
+        {
+          "source": "/diary/2022-10-09",
+          "target": "/notes/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
+          "text": "notes/清理 GIt 中的历史文件"
+        }
+      ],
+      "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F": [
+        {
+          "source": "/notes/PriceOps",
+          "target": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+          "text": "notes/逐步描述一个新模型的方式"
+        }
+      ],
+      "/notes/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B": [
+        {
+          "source": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+          "target": "/notes/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B",
+          "text": "notes/鸭子类型"
+        }
+      ],
+      "/notes/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC": [
+        {
+          "source": "/diary/2022-10-08",
+          "target": "/notes/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
+          "text": "notes/Dockerfile 多行脚本"
+        }
+      ],
+      "/notes/Golang": [
+        {
+          "source": "/notes/hugo-obsidian",
+          "target": "/notes/Golang",
+          "text": "notes/Golang"
+        }
+      ],
+      "/notes/LSMs": [
+        {
+          "source": "/diary/2022-10-08",
+          "target": "/notes/LSMs",
+          "text": "notes/LSMs"
+        }
+      ],
+      "/notes/PriceOps": [
+        {
+          "source": "/notes/Pricing-as-Code",
+          "target": "/notes/PriceOps",
+          "text": "notes/PriceOps"
+        },
+        {
+          "source": "/notes/Tier",
+          "target": "/notes/PriceOps",
+          "text": "notes/PriceOps"
+        }
+      ],
+      "/notes/Pricing-as-Code": [
+        {
+          "source": "/diary/2022-10-10",
+          "target": "/notes/Pricing-as-Code",
+          "text": "notes/Pricing as Code"
+        },
+        {
+          "source": "/notes/Tier",
+          "target": "/notes/Pricing-as-Code",
+          "text": "notes/Pricing as Code"
+        }
+      ],
+      "/notes/Tier": [
+        {
+          "source": "/diary/2022-10-10",
+          "target": "/notes/Tier",
+          "text": "notes/Tier"
+        },
+        {
+          "source": "/notes/Pricing-as-Code",
+          "target": "/notes/Tier",
+          "text": "notes/Tier"
+        }
+      ],
+      "/notes/hugo-extended": [
+        {
+          "source": "/",
+          "target": "/notes/hugo-extended",
+          "text": "notes/hugo-extended"
+        }
+      ],
+      "/notes/hugo-obsidian": [
+        {
+          "source": "/",
+          "target": "/notes/hugo-obsidian",
+          "text": "notes/hugo-obsidian"
+        }
+      ],
+      "/notes/maigret": [
+        {
+          "source": "/diary/2022-10-08",
+          "target": "/notes/maigret",
+          "text": "notes/maigret"
+        }
+      ],
+      "/notes/rocksdb": [
+        {
+          "source": "/diary/2022-10-08",
+          "target": "/notes/rocksdb",
+          "text": "notes/rocksdb"
+        },
+        {
+          "source": "/diary/2022-10-08",
+          "target": "/notes/rocksdb",
+          "text": "notes/rocksdb"
         }
       ],
       "/novelai": [
@@ -367,23 +414,18 @@
           "text": "novelai"
         }
       ],
+      "/pillar": [
+        {
+          "source": "/notes/PriceOps",
+          "target": "/pillar",
+          "text": "pillar"
+        }
+      ],
       "/postgreSQL": [
         {
           "source": "/diary/2022-10-08",
           "target": "/postgreSQL",
           "text": "postgreSQL"
-        }
-      ],
-      "/rocksdb": [
-        {
-          "source": "/diary/2022-10-08",
-          "target": "/rocksdb",
-          "text": "rocksdb"
-        },
-        {
-          "source": "/diary/2022-10-08",
-          "target": "/rocksdb",
-          "text": "rocksdb"
         }
       ],
       "/stable-diffusion": [
@@ -411,54 +453,34 @@
   },
   "links": [
     {
-      "source": "/PriceOps",
-      "target": "/PriceOps",
-      "text": "PriceOps"
-    },
-    {
-      "source": "/Pricing-as-Code",
-      "target": "/PriceOps",
-      "text": "PriceOps"
-    },
-    {
-      "source": "/Pricing-as-Code",
-      "target": "/Tier",
-      "text": "Tier"
-    },
-    {
-      "source": "/Tier",
-      "target": "/Pricing-as-Code",
-      "text": "Pricing as Code"
-    },
-    {
-      "source": "/Tier",
-      "target": "/PriceOps",
-      "text": "PriceOps"
-    },
-    {
       "source": "/",
       "target": "/tags/",
       "text": "标签"
     },
     {
       "source": "/",
-      "target": "/hugo-extended",
-      "text": "hugo-extended"
+      "target": "/notes/hugo-extended",
+      "text": "notes/hugo-extended"
     },
     {
       "source": "/",
-      "target": "/hugo-obsidian",
-      "text": "hugo-obsidian"
+      "target": "/notes/hugo-obsidian",
+      "text": "notes/hugo-obsidian"
+    },
+    {
+      "source": "/blogs/Role-of-microservice-framework",
+      "target": "/",
+      "text": "Mongo Doc access design"
     },
     {
       "source": "/diary/2022-09-28",
-      "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-      "text": "为什么学习稀缺的技能"
+      "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+      "text": "notes/为什么学习稀缺的技能"
     },
     {
       "source": "/diary/2022-09-30",
-      "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
-      "text": "为什么学习稀缺的技能"
+      "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%A8%80%E7%BC%BA%E7%9A%84%E6%8A%80%E8%83%BD",
+      "text": "notes/为什么学习稀缺的技能"
     },
     {
       "source": "/diary/2022-10-08",
@@ -482,23 +504,23 @@
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
-      "text": "Dockerfile 多行脚本"
+      "target": "/notes/Dockerfile-%E5%A4%9A%E8%A1%8C%E8%84%9A%E6%9C%AC",
+      "text": "notes/Dockerfile 多行脚本"
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/rocksdb",
-      "text": "rocksdb"
+      "target": "/notes/rocksdb",
+      "text": "notes/rocksdb"
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/LSMs",
-      "text": "LSMs"
+      "target": "/notes/LSMs",
+      "text": "notes/LSMs"
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/rocksdb",
-      "text": "rocksdb"
+      "target": "/notes/rocksdb",
+      "text": "notes/rocksdb"
     },
     {
       "source": "/diary/2022-10-08",
@@ -512,8 +534,8 @@
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
-      "text": "为什么我们在RocksDB上创建CockroachDB项目？"
+      "target": "/notes/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%9C%A8RocksDB%E4%B8%8A%E5%88%9B%E5%BB%BACockroachDB%E9%A1%B9%E7%9B%AE",
+      "text": "notes/为什么我们在RocksDB上创建CockroachDB项目？"
     },
     {
       "source": "/diary/2022-10-08",
@@ -542,8 +564,8 @@
     },
     {
       "source": "/diary/2022-10-08",
-      "target": "/maigret",
-      "text": "maigret"
+      "target": "/notes/maigret",
+      "text": "notes/maigret"
     },
     {
       "source": "/diary/2022-10-09",
@@ -552,28 +574,63 @@
     },
     {
       "source": "/diary/2022-10-09",
-      "target": "/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
-      "text": "使用 quartz 托管 obsidian 到网络上"
+      "target": "/notes/%E4%BD%BF%E7%94%A8-quartz-%E6%89%98%E7%AE%A1-obsidian-%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%8A",
+      "text": "notes/使用 quartz 托管 obsidian 到网络上"
     },
     {
       "source": "/diary/2022-10-09",
-      "target": "/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
-      "text": "清理 GIt 中的历史文件"
+      "target": "/notes/%E6%B8%85%E7%90%86-GIt-%E4%B8%AD%E7%9A%84%E5%8E%86%E5%8F%B2%E6%96%87%E4%BB%B6",
+      "text": "notes/清理 GIt 中的历史文件"
     },
     {
       "source": "/diary/2022-10-10",
-      "target": "/Pricing-as-Code",
-      "text": "Pricing as Code"
+      "target": "/notes/Pricing-as-Code",
+      "text": "notes/Pricing as Code"
     },
     {
       "source": "/diary/2022-10-10",
-      "target": "/Tier",
-      "text": "Tier"
+      "target": "/notes/Tier",
+      "text": "notes/Tier"
     },
     {
-      "source": "/hugo-obsidian",
-      "target": "/Golang",
-      "text": "Golang"
+      "source": "/notes/PriceOps",
+      "target": "/pillar",
+      "text": "pillar"
+    },
+    {
+      "source": "/notes/PriceOps",
+      "target": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+      "text": "notes/逐步描述一个新模型的方式"
+    },
+    {
+      "source": "/notes/Pricing-as-Code",
+      "target": "/notes/PriceOps",
+      "text": "notes/PriceOps"
+    },
+    {
+      "source": "/notes/Pricing-as-Code",
+      "target": "/notes/Tier",
+      "text": "notes/Tier"
+    },
+    {
+      "source": "/notes/Tier",
+      "target": "/notes/Pricing-as-Code",
+      "text": "notes/Pricing as Code"
+    },
+    {
+      "source": "/notes/Tier",
+      "target": "/notes/PriceOps",
+      "text": "notes/PriceOps"
+    },
+    {
+      "source": "/notes/hugo-obsidian",
+      "target": "/notes/Golang",
+      "text": "notes/Golang"
+    },
+    {
+      "source": "/notes/%E9%80%90%E6%AD%A5%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F",
+      "target": "/notes/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B",
+      "text": "notes/鸭子类型"
     }
   ]
 }
