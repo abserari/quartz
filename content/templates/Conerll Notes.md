@@ -1,5 +1,5 @@
 ---
-Topic: {{title}}
+title: "{{title}}"
 Date: {{date:MMM d, YYYY}}
 ---
 ### 摘要

@@ -1,4 +1,5 @@
 ---
+title: "{{title}}"
 created: ["{{date}} {{time}}"]
 aliases: ["Book: {{title}}"]
 tags:
