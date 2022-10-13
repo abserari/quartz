@@ -16,7 +16,7 @@ Hello👋，本页面提供了一个网络访问我的笔记的途径，使用 H
 
 目前的写作工作流：
 ### 写
-在任意地方都可以写，打开一个 obsidian 目标文件夹即可。
+在任意地方都可以写，打开一个 [[obsidian]] 目标文件夹即可。
 
 ### 发布到网页 notes.abser.top
 1. 通过 abserari/quartz 这个 repo，直接使用 obsidian-git 插件，push 到 quartz 库中。
