@@ -1,31 +1,18 @@
 ---
 title: "{{title}}"
 created: ["{{date}} {{time}}"]
-aliases: ["Blog Post Code"]
 tags:
-- Blog/
+- 博客/
 ---
+# ❗ 相关数据
+## 🎯 目的
 
-# ❓ Information
-Type:: 
-Writer:: 
-Tags:: 
-Subject:: 
-Started Reading on:: 
-Completed on:: 
-Perched on:: 
-Price:: 
-
----
-# ❗ Relevant data
-## 🎯 What Is The Objective
-## 📦 Information Resources
+## 📦撰写时的资源
 
 
 # 🔰 Blog post ->  
-A blog post is like a conversation, you need to explain the information however you must only speak about subjects you understand and like. 
+
 ## 1️⃣ Intro 
-* A promise statement 
 * A preview of what's to come 
 ## 2️⃣ Overview 
 * A simple definition 
@@ -33,10 +20,9 @@ A blog post is like a conversation, you need to explain the information however 
 ## 📃 Steps 
 * Detail of each the steps 
 # ✅ Checklist Inspiration
-- [ ] Brainstorm the topics that I want to write about in bullet points 
-- [ ] Reorder those bullet points to create a line of thought Draft
-- [ ] Expand those bullet points into sentences/text
-- [ ] Draft 5 titles and pick one
-- [ ] Revise the complete text for typos and any rephrasing that need to be made 
-- [ ] Publish or schedule the post
-- [ ] Promote
+- [ ] 头脑风暴列出来
+- [ ] 重新排序一下组织结构
+- [ ] 扩展写
+- [ ] 精炼语言
+- [ ] 发布
+- [ ] 推广

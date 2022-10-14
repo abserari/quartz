@@ -1,6 +1,7 @@
 ---
 title: "{{title}}"
-Date: {{date:MMM d, YYYY}}
+date: {{date:MMM d, YYYY}}
+aliases: []
 ---
 ## 摘要
 
