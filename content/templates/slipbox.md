@@ -1,5 +1,5 @@
 ---
-created: ["{{date}} {{time}}"]
+date: "{{date}}"
 tags:
 - Frame/
 ---

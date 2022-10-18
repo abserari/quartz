@@ -1,6 +1,6 @@
 ---
 title: "{{title}}"
-date: {{date:MMM d, YYYY}}
+date: "{{date}}"
 aliases: []
 ---
 ## 摘要
