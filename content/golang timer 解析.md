@@ -1,3 +1,8 @@
+---
+title: "golang timer 解析"
+date: "2022-10-21"
+aliases: []
+---
 网址： https://tonybai.com/2016/12/21/how-to-use-timer-reset-in-golang-correctly/
 
 近期[gopheracademy blog](https://blog.gopheracademy.com/)发布了一篇 《[How Do They Do It: Timers in Go](https://blog.gopheracademy.com/advent-2016/go-timers)》，通过对timer源码的分析，讲述了timer的原理，大家可以看看。
