@@ -4,6 +4,7 @@ resources
 .idea
 # 含有敏感信息的插件不上传
 content/.obsidian
+content/.obsidian.zip
 
 # 编译副产物
 assets/indices/linkIndex.json
