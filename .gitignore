@@ -10,5 +10,5 @@ assets/indices/linkIndex.json
 assets/indices/contentIndex.json
 linkmap
 
-# 私人笔记不上传
-content/private 
+# 私人笔记只通过 remotely save 云端保存或者存储在本地，没有计入 git 库 todo: 考虑使用 submodule 来存呗。
+content/private
